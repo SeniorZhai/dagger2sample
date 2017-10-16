@@ -1,8 +1,8 @@
 package com.seniorzhai.dagger2sample.model
 
+import io.reactivex.Flowable
 import retrofit2.http.GET
 import retrofit2.http.Path
-import rx.Observable
 
 /**
  * Created by zhai on 16/5/23.
@@ -10,5 +10,5 @@ import rx.Observable
 
 interface ApiService {
     @GET("day/{year}/{month}/{day}")
-    fun getGankData(@Path("year") year: Int, @Path("month") month: Int, @Path("day") day: Int): Observable<GankData>
+    fun getGankData(@Path("year") year: Int, @Path("month") month: Int, @Path("day") day: Int): Flowable<GankData>
 }

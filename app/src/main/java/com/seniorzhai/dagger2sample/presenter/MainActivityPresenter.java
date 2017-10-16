@@ -10,14 +10,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-/**
- * Created by zhai on 16/5/23.
- */
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivityPresenter {
 
@@ -52,39 +48,33 @@ public class MainActivityPresenter {
         api.getGankData(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<GankData, GankData.Result>() {
+                .map(new Function<GankData, GankData.Result>() {
                     @Override
-                    public GankData.Result call(GankData gankData) {
+                    public GankData.Result apply(GankData gankData) throws Exception {
                         return gankData.getResults();
                     }
                 })
-                .map(new Func1<GankData.Result, List<Gank>>() {
+                .map(new Function<GankData.Result, List<Gank>>() {
                     @Override
-                    public List<Gank> call(GankData.Result result) {
+                    public List<Gank> apply(GankData.Result result) throws Exception {
                         return addAllResults(result);
                     }
                 })
-                .subscribe(new Subscriber<List<Gank>>() {
+                .subscribe(new Consumer<List<Gank>>() {
                     @Override
-                    public void onCompleted() {
-                        // after get data complete, need put off time one day
-                        mCurrentDate = new Date(date.getTime() - DAY_OF_MILLISECOND);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(List<Gank> list) {
-                        // some day the data will be return empty like sunday, so we need get after day data
+                    public void accept(List<Gank> list) throws Exception {
                         if (list.isEmpty()) {
                             getData(new Date(date.getTime() - DAY_OF_MILLISECOND));
                         } else {
                             mView.fillData(list);
                             mView.hideLoading();
                         }
-
+                        mCurrentDate = new Date(date.getTime() - DAY_OF_MILLISECOND);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.hideLoading();
                     }
                 });
     }
