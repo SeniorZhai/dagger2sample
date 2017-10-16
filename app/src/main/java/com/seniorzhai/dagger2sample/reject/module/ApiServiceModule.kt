@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 class ApiServiceModule {
 
-    internal val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create()
+    private val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create()
 
     @Provides
     @Singleton

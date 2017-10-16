@@ -2,11 +2,9 @@ package com.seniorzhai.dagger2sample
 
 import android.app.Application
 import android.content.Context
-
 import com.seniorzhai.dagger2sample.reject.components.AppComponent
 import com.seniorzhai.dagger2sample.reject.components.DaggerAppComponent
 import com.seniorzhai.dagger2sample.reject.module.ApiServiceModule
-import com.seniorzhai.dagger2sample.reject.module.AppModule
 
 /**
  * Created by zhai on 16/5/23.
@@ -20,7 +18,6 @@ class App : Application() {
         super.onCreate()
         // 注入AppModule ApiServiceModule
         appComponent = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
                 .apiServiceModule(ApiServiceModule())
                 .build()
     }
