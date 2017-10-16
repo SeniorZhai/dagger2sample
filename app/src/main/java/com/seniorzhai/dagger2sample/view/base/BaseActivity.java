@@ -18,7 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupActivityComponent(App.get(this).getAppComponent());
+        setupActivityComponent(App.Companion.get(this).getAppComponent());
     }
 
     protected void setTitleBar(boolean enabled, String title){

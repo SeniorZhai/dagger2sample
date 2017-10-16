@@ -7,7 +7,6 @@ import android.widget.ImageView;
 
 import com.seniorzhai.dagger2sample.model.Gank;
 import com.seniorzhai.dagger2sample.view.imp.IMeiziView;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by zhai on 16/5/23.
@@ -37,10 +36,7 @@ public class MeiziPresenter {
     }
 
     public void onCreate() {
-        Picasso.with(mContext)
-                .load(mGank.url)
-                .noFade()
-                .into(mView.getImageView());
+        mView.loadImage(mGank.getUrl());
     }
 
     public void saveMeizi(ImageView iv) {

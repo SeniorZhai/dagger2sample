@@ -55,7 +55,7 @@ public class MainActivityPresenter {
                 .map(new Func1<GankData, GankData.Result>() {
                     @Override
                     public GankData.Result call(GankData gankData) {
-                        return gankData.results;
+                        return gankData.getResults();
                     }
                 })
                 .map(new Func1<GankData.Result, List<Gank>>() {
@@ -91,14 +91,14 @@ public class MainActivityPresenter {
 
     private List<Gank> addAllResults(GankData.Result results) {
         mGankList.clear();
-        if (results.androidList != null) mGankList.addAll(results.androidList);
-        if (results.iOSList != null) mGankList.addAll(results.iOSList);
-        if (results.appList != null) mGankList.addAll(results.appList);
-        if (results.expandList != null) mGankList.addAll(results.expandList);
-        if (results.recommendList != null) mGankList.addAll(results.recommendList);
-        if (results.restList != null) mGankList.addAll(results.restList);
+        if (results.getAndroidList() != null) mGankList.addAll(results.getAndroidList());
+        if (results.getIOSList() != null) mGankList.addAll(results.getIOSList());
+        if (results.getAppList() != null) mGankList.addAll(results.getAppList());
+        if (results.getExpandList() != null) mGankList.addAll(results.getExpandList());
+        if (results.getRecommendList() != null) mGankList.addAll(results.getRecommendList());
+        if (results.getRestList() != null) mGankList.addAll(results.getRestList());
         // make meizi data is in first position
-        if (results.girlList != null) mGankList.addAll(0, results.girlList);
+        if (results.getGirlList() != null) mGankList.addAll(0, results.getGirlList());
         return mGankList;
     }
 
